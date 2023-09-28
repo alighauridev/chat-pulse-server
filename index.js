@@ -11,7 +11,7 @@ import * as Server from 'socket.io';
 
 const app = express();
 const corsConfig = {
-  origin: 'http://localhost:3000',
+  origin: 'https://chat-pulse-client.vercel.app/',
   credentials: true,
 };
 
@@ -29,7 +29,7 @@ const server = app.listen(process.env.PORT, () => {
 const io = new Server.Server(server, {
   pingTimeout: 60000,
   cors: {
-    origin: 'http://localhost:3000',
+    origin: 'https://chat-pulse-client.vercel.app/',
   },
 });
 io.on('connection', (socket) => {
