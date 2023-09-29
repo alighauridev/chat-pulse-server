@@ -1,8 +1,8 @@
-const cors = require("cors");
+import cors from "cors";
 
 const whiteList = [];
 
-let corsOptionsDelegate = (req, callback) => {
+const corsOptionsDelegate = (req, callback) => {
     let corsOptions;
     if (whiteList.indexOf(req.header("Origin")) !== -1) {
         corsOptions = { origin: true };
@@ -15,7 +15,7 @@ let corsOptionsDelegate = (req, callback) => {
 const corsAll = cors();
 const corsWithOptions = cors(corsOptionsDelegate);
 
-module.exports = {
+export {
     corsAll,
     corsWithOptions,
 };
