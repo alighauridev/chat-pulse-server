@@ -64,6 +64,8 @@ const io = new Server.Server(server, {
   pingTimeout: 60000,
   cors: {
     origin: 'https://chat-pulse-client.vercel.app/',
+    methods: ['GET', 'POST'], // Add any other methods as needed
+    credentials: true,
   },
 });
 
