@@ -3,7 +3,7 @@ import dotenv from 'dotenv/config';
 import mongoDBConnect from './mongoDB/connection.js';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
-import cors from 'cors';
+const cors = require("./utils/cors.js");
 import userRoutes from './routes/user.js';
 import chatRoutes from './routes/chat.js';
 import messageRoutes from './routes/message.js';
@@ -17,7 +17,7 @@ const corsConfig = {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors(corsConfig));
+app.use(cors.corsAll);
 app.use('/', userRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/message', messageRoutes);
