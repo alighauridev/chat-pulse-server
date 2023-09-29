@@ -45,9 +45,12 @@ app.use(corsAll); // for routes that don't require custom CORS options
 // Apply corsWithOptions middleware for specific routes
 app.use('/api/chat', corsWithOptions);
 app.use('/api/message', corsWithOptions);
-
+app.use('/api/chat', chatRoutes);
+app.use('/api/message', messageRoutes);
 // Add your other routes
 app.use('/', userRoutes);
+app.use('/api/chat', chatRoutes);
+app.use('/api/message', messageRoutes);
 // Add other routes as needed
 
 mongoose.set('strictQuery', false);
