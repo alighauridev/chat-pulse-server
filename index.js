@@ -68,6 +68,17 @@ const io = new Server.Server(server, {
   },
 });
 
+io.use((socket, next) => {
+  // Apply the CORS options delegate to Socket.io connections
+  corsOptionsDelegate(socket.request, (err, corsOptions) => {
+    if (err) {
+      return next(err);
+    }
+    socket.request.corsOptions = corsOptions;
+    next();
+  });
+});
+
 io.on("connection", (socket) => {
   socket.on("setup", (userData) => {
     socket.join(userData.id);
