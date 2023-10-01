@@ -7,9 +7,7 @@ import cors from "cors";
 import userRoutes from "./routes/user.js";
 import chatRoutes from "./routes/chat.js";
 import messageRoutes from "./routes/message.js";
-import * as Server from "socket.io";
-
-// Import CORS functions
+import { Server } from "socket.io"; // Use destructuring to import Server from socket.io
 
 const app = express();
 
@@ -18,7 +16,7 @@ const whiteList = [];
 
 const corsOptionsDelegate = (req, callback) => {
   let corsOptions;
-  if (whiteList.indexOf(req.header("Origin")) !== -1) {
+  if (whiteList.indexOf(req.headers.origin) !== -1) {
     corsOptions = { origin: true };
   } else {
     corsOptions = { origin: false };
@@ -44,13 +42,11 @@ app.use(corsAll); // for routes that don't require custom CORS options
 // Apply corsWithOptions middleware for specific routes
 app.use("/api/chat", corsWithOptions);
 app.use("/api/message", corsWithOptions);
-app.use("/api/chat", chatRoutes);
-app.use("/api/message", messageRoutes);
+
 // Add your other routes
 app.use("/", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
-// Add other routes as needed
 
 mongoose.set("strictQuery", false);
 mongoDBConnect();
@@ -59,12 +55,10 @@ const server = app.listen(5000, () => {
   console.log(`Server Listening at PORT - ${process.env.PORT}`);
 });
 
-const io = new Server.Server(server, {
-  pingTimeout: 60000,
+const io = new Server(server, {
   cors: {
-    origin: "https://chat-pulse-client.vercel.app/",
-    methods: ["GET", "POST"], // Add any other methods as needed
-    credentials: true,
+    origin: "*",
+    methods: ["GET", "POST"],
   },
 });
 
